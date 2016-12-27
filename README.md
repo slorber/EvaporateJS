@@ -82,7 +82,7 @@ var config = {
      bucket: <AWS_BUCKET>,
      cloudfront: true,
      computeContentMd5: true,
-     cryptoMd5Method: function (data) { return crypto.createHash('md5').update(data).digest('base64'); }
+     cryptoMd5Method: function (data) { function (data) { return crypto.createHash('md5').update(data).digest('base64'); }
 };
 
 return Evaporate.create(config)
@@ -328,7 +328,7 @@ Available configuration options:
 
 * **logging**: default=true, whether Evaporate outputs to the console.log  - should be `true` or `false`
 * **maxConcurrentParts**: default=5, how many concurrent file PUTs will be attempted
-* **partSize**: default = 6 * 1024 * 1024 bytes, the size of the parts into which the file is broken
+* **partSize**: default = 6 * 1024 * 1024 bytes, the size of the parts into which the file is broken. Note the value should be [above 5MB](http://docs.aws.amazon.com/AmazonS3/latest/API/mpUploadComplete.html)
 * **retryBackoffPower**: default=2, how aggressively to back-off on the delay between retries of a part PUT
 * **maxRetryBackoffSecs**: default=300, the maximum number of seconds to wait between retries 
 * **maxFileSize**: default=no limit, the allowed maximum files size, in bytes.
